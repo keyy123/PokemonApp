@@ -1,0 +1,43 @@
+.all-pkmn{
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    gap: 2.5%;
+}
+
+.pkmn-card > div {
+    display: flex;
+    border: 1px solid green;
+    /* flex: 1 1 17.5%;*/
+    flex-direction: column; 
+}
+
+.pkmn-card__logo > img {
+    width: 10%;
+}
+
+.pkmn-card__logo {
+    display: flex;
+    width: 200px;
+    gap: 5%;
+    padding-left: 2.5%;
+}
+
+.pkmn-card__text {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+
+.pkmn-card__text > span {
+    
+}
+
+.pkmn-card {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 250px;
+    margin-bottom: 50px;
+    text-decoration: none;
+    color: black;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon App</title>
+    <link rel="stylesheet" href="./style/style.css"/>
+</head>
+<body>
+    <div id="root">Will not render</div>
+</body>
+<script type="module" src="App.jsx"></script>
+<script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
+<script>
+    const imgRe = /https:\/\/raw\.githubusercontent\.com\/PokeAPI\/sprites\/[\/-\w\d]+\/[\d\w-]+\.(?:png|svg|gif)/
+const version = 1
+
+self.addEventListener('fetch', function (event) {
+    if (event.request.url.match(imgRe)) {
+        event.respondWith(caches.match(event.request).then(function (response) {
+            if (response) {
+                return response
+            }
+            
+            return fetch(event.request).then(function (response) {
+                if (event.request.url.match(imgRe)) {
+                    caches.open("pokeapi-js-wrapper-images-" + version).then(function (cache) {
+                        // The response is opaque, if it fails cache.add() will reject it
+                        cache.add(event.request.url)
+                    })
+                }
+                return response;
+            }).catch(function (error) {
+                console.error(error)
+            })
+        }))
+    }
+})
+
+self.addEventListener('install', function(event) {
+    self.skipWaiting()
+})
+
+</script>
+</html>
